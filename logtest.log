@@ -1,2 +1,0 @@
-2017-09-07 16:13:16,391 | logtest  | INFO  | Method: __main__   | Line No: 12    | Message: test in root of script
-2017-09-07 16:13:16,394 | logtest  | INFO  | Method: __main__   | Line No: 15    | Message: test with comment above function call
