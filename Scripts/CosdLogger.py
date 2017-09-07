@@ -15,7 +15,7 @@ import logging, os, inspect, glob
 
 class CosdLogger:
 
-    def __init__(self, name = None, directory = None):
+    def __init__(self, directory = None, name = None):
         self.file_name = name
         self.directory = directory
         self.extra_format = {'mod_name':'root', 'line_no' : 0, 'line_code' : ''} 

@@ -15,7 +15,7 @@ class LogTestClassA:
 def TestLogger(msg):
     logutil.log(msg)
 
-logutil = CosdLogger(None, r"..\Logs")
+logutil = CosdLogger("..\\Logs", None)
 
 logutil.log("test in root of script")
 
