@@ -21,7 +21,7 @@ Step 1. Copy the sannetlogger.py file from the sannetlogger directory to the scr
 Step 2. Import sannetlogger using the following syntax:
 
 ```python
-from sannetlogger import sannetlogger
+from sannetlogger import SannetLogger
 ```
 
 #### Option 2: Install on system globally.
