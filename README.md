@@ -38,7 +38,7 @@ Setup.py install
 
 Project will now be available on the local system for all python projects.
 
-## Instructions
+### How to USe
 
 To use this script, simply include the following at the top of your imports:
 
