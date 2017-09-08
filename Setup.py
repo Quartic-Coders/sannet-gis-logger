@@ -9,13 +9,13 @@ def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 setup(
-    name = "CosdLogger",
-    version = "1.0.0",
+    name = "SannetLogger",
+    version = "1.0.1",
     author = "Andrew Tangeman",
     author_email = "andrew@quarticsolutions.com",
     description = ("Standardize logging module for City of San Diego batch Processing."),
     license = "BSD",
     keywords = "cosd logger batch",
-    url = "http://packages.python.org/an_example_pypi_project",
-    packages=['CosdLogger'],
+    #url = "http://packages.python.org/an_example_pypi_project",
+    packages=['sannetlogger'],
 )
