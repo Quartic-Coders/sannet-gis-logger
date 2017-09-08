@@ -1,15 +1,5 @@
-2017-09-07 18:05:06,496 | LogTestMain |INFO  | Method: <module>   | Line No: 20    | Message: test in root of script
-2017-09-07 18:05:06,497 | LogTestMain |INFO  | Method: <module>   | Line No: 23    | Message: test with comment above root function call
-2017-09-07 18:05:06,500 | LogTestMain |INFO  | Method: TestLogger | Line No: 16    | Message: test logger from inside root method
-2017-09-07 18:05:06,503 | LogTestMain |INFO  | Method: class_test | Line No: 12    | Message: test logger from inside method inside a class with message= test method from inside internal class
-2017-09-07 18:05:06,506 | LogTestMain |INFO  | Method: class_test | Line No: 8     | Message: test logger from inside method inside a class with message: test method with logger passed to external class
-2017-09-08 11:24:51,502 | LogTestMain |INFO  | Method: <module>   | Line No: 20    | Message: test in root of script
-2017-09-08 11:24:51,503 | LogTestMain |INFO  | Method: <module>   | Line No: 23    | Message: test with comment above root function call
-2017-09-08 11:24:51,506 | LogTestMain |INFO  | Method: TestLogger | Line No: 16    | Message: test logger from inside root method
-2017-09-08 11:24:51,507 | LogTestMain |INFO  | Method: class_test | Line No: 12    | Message: test logger from inside method inside a class with message= test method from inside internal class
-2017-09-08 11:24:51,509 | LogTestMain |INFO  | Method: class_test | Line No: 8     | Message: test logger from inside method inside a class with message: test method with logger passed to external class
-2017-09-08 11:25:18,586 | LogTestMain |INFO  | Method: <module>   | Line No: 20    | Message: test in root of script
-2017-09-08 11:25:18,588 | LogTestMain |INFO  | Method: <module>   | Line No: 23    | Message: test with comment above root function call
-2017-09-08 11:25:18,591 | LogTestMain |INFO  | Method: TestLogger | Line No: 16    | Message: test logger from inside root method
-2017-09-08 11:25:18,592 | LogTestMain |INFO  | Method: class_test | Line No: 12    | Message: test logger from inside method inside a class with message= test method from inside internal class
-2017-09-08 11:25:18,595 | LogTestMain |INFO  | Method: class_test | Line No: 8     | Message: test logger from inside method inside a class with message: test method with logger passed to external class
+2017-09-08 12:01:29,224 | LogTestMain |INFO  | Method: Main       | Line No: 20    | Message: test in root of script
+2017-09-08 12:01:29,226 | LogTestMain |INFO  | Method: Main       | Line No: 23    | Message: test with comment above root function call
+2017-09-08 12:01:29,227 | LogTestMain |INFO  | Method: TestLogger | Line No: 16    | Message: test logger from inside root method
+2017-09-08 12:01:29,230 | LogTestMain |INFO  | Method: class_test | Line No: 12    | Message: test logger from inside method inside a class with message= test method from inside internal class
+2017-09-08 12:01:29,233 | LogTestMain |INFO  | Method: class_test | Line No: 8     | Message: test logger from inside method inside a class with message: test method with logger passed to external class

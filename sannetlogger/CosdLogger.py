@@ -25,14 +25,14 @@ class CosdLogger:
         # intialize logger
         self.__logger = logging.getLogger(self.file_name) # sets unique name for logger based on caller name
         self.__logger.setLevel(logging.INFO) # sets level of urgency
-        filePath = self.directory + '\\' + self.file_name + '.log' # format complete file path
+        file_path = self.directory + '\\' + self.file_name + '.log' # format complete file path
 
         # add the handlers to the logger
-        handler = logging.FileHandler(filePath) # create a file handler    
-        handler.setLevel(logging.INFO) # set a log format        
+        file_handler = logging.FileHandler(file_path) # create a file handler    
+        file_handler.setLevel(logging.INFO) # set a log format        
         formatter = logging.Formatter(self.LOG_FORMAT) # init formatter
-        handler.setFormatter(formatter) # set formatter for log file
-        self.__logger.addHandler(handler) # add final handle object
+        file_handler.setFormatter(formatter) # set formatter for log file
+        self.__logger.addHandler(file_handler) # add final handle object
 
         # set enhanced formatting requirements       
         self.__logger = logging.LoggerAdapter(self.__logger, self.__addformat)
