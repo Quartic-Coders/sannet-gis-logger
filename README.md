@@ -14,6 +14,8 @@ Python 2.7.1 or above.
 
 #### Option 1: Install in project folder
 
+Use this step if you're developing locally and <i>do not</i> want to install the script ["globally"](https://stackoverflow.com/questions/1471994/what-is-setup-py) on your local machine. 
+
 Step 1. Copy the sannetlogger.py file from the sannetlogger directory to the scripts folder of your project
 	
 Step 2. Import sannetlogger using the following syntax:
@@ -23,6 +25,8 @@ from sannetlogger import sannetlogger
 ```
 
 #### Option 2: Install on system globally.
+
+Use this option to install the module directly on your machine or a server. GISAPPSERVER and VMGISDEV04 are examples of where this module is already installed. 
 
 Step 1. Open command prompt and navigate to the sannetlogger directory
 
