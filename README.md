@@ -4,8 +4,7 @@ Class to standardize logging procedure for City of San Diego batch Processing.
 
 ## Getting Started
 
-Copy CosdLogger.py to directory of executing scripts on your local machine for local development,
-or use Setup.py to install the package gloablly. 
+sannetlogger.py is a self-contained and portable, script but it can also be installed globally on your local machine for development using setup.py -install from cmd.
 
 ### Prerequisites
 
@@ -13,24 +12,24 @@ Python 2.7.1 or above.
 
 ### Installing
 
-Option 1: Install in project folder
+#### Option 1: Install in project folder
 
-Step 1. Copy the sannetlogger.py file from the sannetlogger directory to the scripts folder of your project
-Step 2. Import sannetlogger using the following syntax:
+-- Step 1. Copy the sannetlogger.py file from the sannetlogger directory to the scripts folder of your project
+-- Step 2. Import sannetlogger using the following syntax:
 
 ```python
 from sannetlogger import sannetlogger
 ```
 
-Option 2: Install on system globally.
+#### Option 2: Install on system globally.
 
-Step 1. Open command prompt and navigate to the sannetlogger directory
+-- Step 1. Open command prompt and navigate to the sannetlogger directory
 
 ```
 cd <Drive>\..\sannetlog
 ```
 
-Step 2. Run the setup.py file with the proper command
+-- Step 2. Run the setup.py file with the proper command
 
 ```
 Setup.py install
@@ -71,7 +70,7 @@ sanlogger.log("test message") # log will output to Logs directory
 
 ## Version
 
-Alpha version 1.0.1 
+Alpha version 1.0.4
 
 ## Authors
 
