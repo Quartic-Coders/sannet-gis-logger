@@ -53,8 +53,8 @@ from sannetlogger import SannetLogger
 To log, assign the ``` SannetLogger() ``` object to a variable, and use the .log() method to write to the log file.
 
 ```python
-sanlogger = SannetLogger() # initialize sannetlogger
-sanlogger.log("test message") # log using .log() method
+sanlogger = SannetLogger()
+sanlogger.log("test message")
  ```
  
 When initializing the logger you can define the following optional parameters to output the log:
