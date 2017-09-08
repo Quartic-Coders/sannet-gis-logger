@@ -1,7 +1,7 @@
 
 
 
-from CosdLogger import CosdLogger
+from sannetlogger import SannetLogger
 from LogTestClassB import LogTestClassB
 
 class LogTestClassA:
@@ -15,7 +15,7 @@ class LogTestClassA:
 def TestLogger(msg):
     logutil.log(msg)
 
-logutil = CosdLogger("..\\Logs")
+logutil = SannetLogger("..\\Logs")
 
 logutil.log("test in root of script")
 
