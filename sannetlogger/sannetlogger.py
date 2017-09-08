@@ -1,5 +1,5 @@
 # ---------------------------------------------------------------------------
-# Name:      CosdLogger.py
+# Name:      SannetLogger.py
 # Author:    Andrew Tangeman
 # Created:   2017-09-07
 # Purpose:   Class to standardize logging procedure for City of San Diego batch
