@@ -16,6 +16,6 @@ setup(
     description = ("Standardize logging module for City of San Diego batch Processing."),
     license = "BSD",
     keywords = "cosd logger batch",
-    #url = "http://packages.python.org/an_example_pypi_project",
+    url = "http://tfs/tfs/CoSDCollection/0023%20Enterprise%20GIS/_git/sannet-gis-logger",
     packages=['sannetlogger'],
 )
