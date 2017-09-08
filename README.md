@@ -14,28 +14,29 @@ Python 2.7.1 or above.
 
 #### Option 1: Install in project folder
 
--- Step 1. Copy the sannetlogger.py file from the sannetlogger directory to the scripts folder of your project
--- Step 2. Import sannetlogger using the following syntax:
+	Step 1. Copy the sannetlogger.py file from the sannetlogger directory to the scripts folder of your project
+	
+	Step 2. Import sannetlogger using the following syntax:
 
-```python
-from sannetlogger import sannetlogger
-```
+	```python
+	from sannetlogger import sannetlogger
+	```
 
 #### Option 2: Install on system globally.
 
--- Step 1. Open command prompt and navigate to the sannetlogger directory
+	Step 1. Open command prompt and navigate to the sannetlogger directory
 
-```
-cd <Drive>\..\sannetlog
-```
+	```
+	cd <Drive>\..\sannetlog
+	```
 
--- Step 2. Run the setup.py file with the proper command
+	Step 2. Run the setup.py file with the proper command
 
-```
-Setup.py install
-```
+	```
+	Setup.py install
+	```
 
-Project will now be available on the local system for all python projects.
+	Project will now be available on the local system for all python projects.
 
 ### How to USe
 
