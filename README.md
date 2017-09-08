@@ -38,6 +38,37 @@ Setup.py install
 
 Project will now be available on the local system for all python projects.
 
+## Instructions
+
+To use this script, simply include the following at the top of your imports:
+
+```python
+from sannetlogger import SannetLogger
+```
+
+To log, assign the ``` SannetLogger() ``` object to a variable, and use the .log() method to write to the log file.
+
+```python
+sanlogger = SannetLogger() # initialize sannetlogger
+sanlogger.log("test message") # log using .log() method
+ ```
+ 
+When initializing the logger you can define the following optional parameters to output the log:
+
+```python
+sanlogger = SannetLogger('<Directory Name>', '<File_Name>') # optional parameters
+```
+
+By default, the logger will output all files to the same directory of the calling script and the name will automatically match the script name. 
+
+For Example: To output logs to a directory called "Log" outside of the \Scripts directory  use the following:
+
+```python
+sanlogger = SannetLogger("..\\Logs") # .. operator will cd back 1 and into Log directory
+ 
+sanlogger.log("test message") # log will output to Logs directory
+```
+
 ## Version
 
 Alpha version 1.0.1 
