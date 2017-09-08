@@ -18,7 +18,7 @@ Option 1: Install in project folder
 Step 1. Copy the sannetlogger.py file from the sannetlogger directory to the scripts folder of your project
 Step 2. Import sannetlogger using the following syntax:
 
-	'''py
+	'''python
 	from sannetlogger import sannetlogger
 	'''
 
