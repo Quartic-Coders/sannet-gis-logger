@@ -1,4 +1,4 @@
-# Project Title
+# SannetLogger
 
 Class to standardize logging procedure for City of San Diego batch Processing.
 
