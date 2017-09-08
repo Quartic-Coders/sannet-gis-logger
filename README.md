@@ -14,7 +14,7 @@ Python 2.7.1 or above.
 
 #### Option 1: Install in project folder
 
-Use this step if you're developing locally and <i>do not</i> want to install the script ["globally"](https://stackoverflow.com/questions/1471994/what-is-setup-py) on your local machine. 
+Use this step if you're developing locally and do not want to install the script ["globally"](https://stackoverflow.com/questions/1471994/what-is-setup-py) on your local machine. 
 
 Step 1. Copy the sannetlogger.py file from the sannetlogger directory to the scripts folder of your project
 	
