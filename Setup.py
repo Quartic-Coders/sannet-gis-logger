@@ -10,7 +10,7 @@ def read(fname):
 
 setup(
     name = "SannetLogger",
-    version = "1.0.1",
+    version = "1.0.4",
     author = "Andrew Tangeman",
     author_email = "andrew@quarticsolutions.com",
     description = ("Standardize logging module for City of San Diego batch Processing."),

@@ -13,49 +13,34 @@ Python 2.7.1 or above.
 
 ### Installing
 
-A step by step series of examples that tell you have to get a development env running
+Option 1: Install in project folder
 
-Say what the step will be
+Step 1. Copy the sannetlogger.py file from the sannetlogger directory to the scripts folder of your project
+Step 2. Import sannetlogger using the following syntax:
 
-```
-Give the example
-```
+	'''python
+	from sannetlogger import sannetlogger
+	'''
 
-And repeat
+Option 2: Install on system globally.
 
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
+Step 1. Open command prompt and navigate to the sannetlogger directory
 
 ```
-Give an example
+cd <Drive>\..\sannetlog
 ```
 
-### And coding style tests
-
-Explain what these tests test and why
+Step 2. Run the setup.py file with the proper command
 
 ```
-Give an example
+Setup.py install
 ```
 
-## Deployment
-
-Add additional notes about how to deploy this on a live system
+Project will now be available on the local system for all python projects.
 
 ## Version
 
-Alpha version 1.1.0
+Alpha version 1.0.1 
 
 ## Authors
 
