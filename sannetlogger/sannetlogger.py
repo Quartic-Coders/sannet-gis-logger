@@ -59,6 +59,6 @@ class SannetLogger:
 ## ------ TEST MAIN -----------------------------------------------------------------------
 
 if __name__== "__main__":
-    sanlogger = LoggerMain() # initialize logger
+    sanlogger = SannetLogger() # initialize logger
     print('logging output to ' + sanlogger.directory + '\\' + sanlogger.file_name)
     sanlogger.log("test message") # test log output
