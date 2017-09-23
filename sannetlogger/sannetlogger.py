@@ -13,8 +13,11 @@ from logging import DEBUG, CRITICAL, INFO, ERROR, WARNING, NOTSET
 class SannetLogger(logging.getLoggerClass()):
     # global variable to define default logfile format
     LOG_FORMAT = '%(asctime)-10s | %(name)-8s |'\
-                 '%(levelname)-5s | Method: %(mod_name)-10s | '\
+                 '%(levelname)-8s | Method: %(mod_name)-10s | '\
                  'Line No: %(line_no)-5s | Message: %(message)s'
+
+    # global variable to define default datetime format
+    DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
 
     def __init__(self, directory = "", name = "", level=NOTSET, file_type=".log"):
         """Private method to initialize logger and set formatting to conform to CoSD standards."""
@@ -39,7 +42,7 @@ class SannetLogger(logging.getLoggerClass()):
 
         # add the handlers to the logger
         self.file_handler = logging.FileHandler(self.file_path) # create a file handler
-        self.__formatter = logging.Formatter(self.format) # init formatter
+        self.__formatter = logging.Formatter(self.format, self.DATETIME_FORMAT) # init formatter
         self.file_handler.setFormatter(self.__formatter) # set formatter for log file
         self.logger.addHandler(self.file_handler) # add final handle object
 

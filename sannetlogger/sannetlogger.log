@@ -1,8 +1,8 @@
-2017-09-22 18:35:50,109 | sannetlogger |WARNING | Method: Main       | Line No: 99    | Message: test warning
-2017-09-22 18:35:50,111 | sannetlogger |CRITICAL | Method: Main       | Line No: 100   | Message: test critical
-2017-09-22 18:35:50,112 | sannetlogger |WARNING | Method: Main       | Line No: 101   | Message: test warning
-2017-09-22 18:35:50,115 | sannetlogger |ERROR | Method: Main       | Line No: 103   | Message: test error
-2017-09-22 18:36:07,309 | sannetlogger |WARNING | Method: Main       | Line No: 99    | Message: test warning
-2017-09-22 18:36:07,311 | sannetlogger |CRITICAL | Method: Main       | Line No: 100   | Message: test critical
-2017-09-22 18:36:07,312 | sannetlogger |WARNING | Method: Main       | Line No: 101   | Message: test warning
-2017-09-22 18:36:07,313 | sannetlogger |ERROR | Method: Main       | Line No: 103   | Message: test error
+2017-09-22 18:46:16,526 | sannetlogger |WARNING  | Method: Main       | Line No: 99    | Message: test warning
+2017-09-22 18:46:16,526 | sannetlogger |CRITICAL | Method: Main       | Line No: 100   | Message: test critical
+2017-09-22 18:46:16,528 | sannetlogger |WARNING  | Method: Main       | Line No: 101   | Message: test warning
+2017-09-22 18:46:16,529 | sannetlogger |ERROR    | Method: Main       | Line No: 103   | Message: test error
+2017-09-22 18:48:41 | sannetlogger |WARNING  | Method: Main       | Line No: 102   | Message: test warning
+2017-09-22 18:48:41 | sannetlogger |CRITICAL | Method: Main       | Line No: 103   | Message: test critical
+2017-09-22 18:48:41 | sannetlogger |WARNING  | Method: Main       | Line No: 104   | Message: test warning
+2017-09-22 18:48:41 | sannetlogger |ERROR    | Method: Main       | Line No: 106   | Message: test error
