@@ -8,7 +8,7 @@
 # ---------------------------------------------------------------------------
 
 import logging, os, inspect, glob
-from logging import DEBUG, CRITICAL, INFO, ERROR, WARNING
+from logging import DEBUG, CRITICAL, INFO, ERROR, WARNING, NOTSET
 
 class SannetLogger(logging.getLoggerClass()):
     # global variable to define default logfile format
@@ -16,22 +16,26 @@ class SannetLogger(logging.getLoggerClass()):
                  '%(levelname)-5s | Method: %(mod_name)-10s | '\
                  'Line No: %(line_no)-5s | Message: %(message)s'
 
-    def __init__(self, directory = "", name = "", level=INFO):
+    def __init__(self, directory = "", name = "", level=NOTSET, file_type=".log"):
         """Private method to initialize logger and set formatting to conform to CoSD standards."""
         # Initial construct.
         self.format = self.LOG_FORMAT
         self.level = level
         self.name = name
+        self.parent = None
+        self.propagate = 1
+        self.handlers = []
+        self.disabled = 0
 
         # intialize public and private member variables
         self.__addformat = {'mod_name':'root', 'line_no' : '0', 'line_code' : ''} # verbose log formatting
-        self.file_name = os.path.basename(self.__getCallingName()) if (name == "") else name # assign file name to name of caller if bank
+        self.file_name = os.path.basename(self.__getCallingName()) if (name == "") else name.split('.')[0] # assign file name to name of caller if bank
         self.directory = os.path.dirname(self.__getCallingName()) if (directory == "") else directory # assign dir to dir of caller if blank
 
         # intialize logger
         self.logger = logging.getLogger(self.file_name)
         self.logger.setLevel(level) # sets level of urgency
-        self.file_path = self.directory + '\\' + self.file_name + '.log' # format complete file path
+        self.file_path = self.directory + '\\' + self.file_name + file_type # format complete file path
 
         # add the handlers to the logger
         self.file_handler = logging.FileHandler(self.file_path) # create a file handler
