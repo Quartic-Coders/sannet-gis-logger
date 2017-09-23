@@ -7,7 +7,7 @@
 #
 # ---------------------------------------------------------------------------
 
-import logging, os, inspect, glob
+import logging, os, inspect, glob, sys
 from logging import DEBUG, CRITICAL, INFO, ERROR, WARNING, NOTSET
 
 class SannetLogger(logging.getLoggerClass()):
@@ -19,7 +19,7 @@ class SannetLogger(logging.getLoggerClass()):
     # global variable to define default datetime format
     DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
 
-    def __init__(self, directory = "", name = "", level=NOTSET, file_type=".log"):
+    def __init__(self, directory = "", name = "", level=INFO, file_type=".log", print_to_console=False):
         """Private method to initialize logger and set formatting to conform to CoSD standards."""
         # Initial construct.
         self.format = self.LOG_FORMAT
@@ -32,14 +32,15 @@ class SannetLogger(logging.getLoggerClass()):
 
         # intialize public and private member variables
         self.__addformat = {'mod_name':'root', 'line_no' : '0', 'line_code' : ''} # verbose log formatting
-        self.file_name = os.path.basename(self.__getCallingName()) if (name == "") else name.split('.')[0] # assign file name to name of caller if bank
+        self.file_name = os.path.basename(self.__getCallingName()) if (name == "") else name # assign file name to name of caller if bank
         self.directory = os.path.dirname(self.__getCallingName()) if (directory == "") else directory # assign dir to dir of caller if blank
 
         # intialize logger
+        self.file_name = self.file_name if ("." in self.file_name == False) else self.file_name.split('.')[0]
         self.logger = logging.getLogger(self.file_name)
         self.logger.setLevel(level) # sets level of urgency
         self.file_path = self.directory + '\\' + self.file_name + file_type # format complete file path
-
+        
         # add the handlers to the logger
         self.file_handler = logging.FileHandler(self.file_path) # create a file handler
         self.__formatter = logging.Formatter(self.format, self.DATETIME_FORMAT) # init formatter
@@ -48,6 +49,18 @@ class SannetLogger(logging.getLoggerClass()):
 
         # set enhanced formatting requirements
         self.logger = logging.LoggerAdapter(self.logger, self.__addformat)
+
+        # add handler to print to stdout
+        if (print_to_console):
+            self.__addStreamHandler()
+
+    def __addStreamHandler(self):
+        """Private method to add stream handler for passing messages to stdout."""
+        ch = logging.StreamHandler(sys.stdout)
+        ch.setLevel(logging.DEBUG)
+        formatter = logging.Formatter(self.format, self.DATETIME_FORMAT) # init formatter
+        ch.setFormatter(formatter)
+        self.root.addHandler(ch)
 
     def __getCallingName(self):
         """Private method to return the calling name of parent process in stack queue."""
@@ -96,11 +109,8 @@ class SannetLogger(logging.getLoggerClass()):
 ## ------ TEST MAIN -----------------------------------------------------------------------
 
 if __name__== "__main__":
-    sanlogger = SannetLogger() # initialize logger
-    print('logging output to ' + sanlogger.directory + '\\' + sanlogger.file_name)
-    sanlogger.log("test message") # test log output
-    sanlogger.log("test warning", WARNING)
-    sanlogger.critical("test critical")
-    sanlogger.warning("test warning")
-    sanlogger.info("test info")
-    sanlogger.error("test error")
+    sanlogger = SannetLogger(print_to_console=True) # initialize logger
+    line = sys.stdin.readline()
+    while line:
+        sanlogger.log(line.strip("\n"))
+        line = sys.stdin.readline()
