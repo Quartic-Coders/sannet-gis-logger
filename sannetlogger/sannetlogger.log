@@ -1,0 +1,7 @@
+
+2017-09-22 18:10:12,115 | sannetlogger |INFO  | Method: Main       | Line No: 94    | Message: test message
+2017-09-22 18:10:12,117 | sannetlogger |WARNING | Method: Main       | Line No: 95    | Message: test warning
+2017-09-22 18:10:12,118 | sannetlogger |CRITICAL | Method: Main       | Line No: 96    | Message: test critical
+2017-09-22 18:10:12,118 | sannetlogger |WARNING | Method: Main       | Line No: 97    | Message: test warning
+2017-09-22 18:10:12,119 | sannetlogger |INFO  | Method: Main       | Line No: 98    | Message: test info
+2017-09-22 18:10:12,121 | sannetlogger |ERROR | Method: Main       | Line No: 99    | Message: test error

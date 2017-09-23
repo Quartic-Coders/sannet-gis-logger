@@ -2,8 +2,8 @@
 # Name:      SannetLogger.py
 # Author:    Andrew Tangeman
 # Created:   2017-09-07
-# Purpose:   Class to standardize logging procedure for City of San Diego batch
-#            Processing.
+# Purpose:   Wapper class to standardize logging procedure for City of San Diego batch
+#            Processing. Extends from python logging library. 
 #
 # ---------------------------------------------------------------------------
 
@@ -29,17 +29,15 @@ class SannetLogger(logging.getLoggerClass()):
         self.directory = os.path.dirname(self.__getCallingName()) if (directory == "") else directory # assign dir to dir of caller if blank
 
         # intialize logger
-        self.logger = self.getLogger(self.file_name)
-        self.logger.setLevel(logging.INFO) # sets level of urgency
-        file_path = self.directory + '\\' + self.file_name + '.log' # format complete file path
+        self.logger = logging.getLogger(self.file_name)
+        self.logger.setLevel(level) # sets level of urgency
+        self.file_path = self.directory + '\\' + self.file_name + '.log' # format complete file path
 
         # add the handlers to the logger
-        file_handler = logging.FileHandler(file_path) # create a file handler
-        file_handler.setLevel(logging.INFO) # set a log format
-        
-        formatter = logging.Formatter(self.format) # init formatter
-        file_handler.setFormatter(formatter) # set formatter for log file
-        self.logger.addHandler(file_handler) # add final handle object
+        self.file_handler = logging.FileHandler(self.file_path) # create a file handler
+        self.__formatter = logging.Formatter(self.format) # init formatter
+        self.file_handler.setFormatter(self.__formatter) # set formatter for log file
+        self.logger.addHandler(self.file_handler) # add final handle object
 
         # set enhanced formatting requirements
         self.logger = logging.LoggerAdapter(self.logger, self.__addformat)
@@ -57,9 +55,6 @@ class SannetLogger(logging.getLoggerClass()):
         line_no = inspect.getouterframes(stack_frame[0])[0][2] # gets line number trace fron stack outer frame
         self.__addformat['mod_name'] = module if (module != '<module>') else "Main" # set name of calling method
         self.__addformat['line_no'] = line_no # set line number
-
-    def getLogger(self, name):
-        return logging.getLogger(name)
 
     def log(self, message, level=INFO):
         """Public method to execute writing a message to log file."""
@@ -99,3 +94,6 @@ if __name__== "__main__":
     sanlogger.log("test message") # test log output
     sanlogger.log("test warning", WARNING)
     sanlogger.critical("test critical")
+    sanlogger.warning("test warning")
+    sanlogger.info("test info")
+    sanlogger.error("test error")
