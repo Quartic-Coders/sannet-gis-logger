@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name = "SannetLogger",
-    version = "1.0.5",
+    version = "1.0.7",
     author = "Andrew Tangeman",
     author_email = "andrew@quarticsolutions.com",
     description = ("Standardize logging module for City of San Diego batch Processing."),
