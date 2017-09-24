@@ -13,7 +13,7 @@ from logging import DEBUG, CRITICAL, INFO, ERROR, WARNING, NOTSET
 class SannetLogger(logging.getLoggerClass()):
     # global variable to define default logfile format
     LOG_FORMAT = '%(asctime)-10s | %(name)-10s | '\
-                 '%(levelname)-8s | Method: %(mod_name)-15s | '\
+                 '%(levelname)-8s | Method: %(mod_name)-10s | '\
                  'Line No: %(line_no)-5s | Message: %(message)s'
 
     # global variable to define default datetime format
