@@ -7,12 +7,14 @@
 #
 # ---------------------------------------------------------------------------   
 
-import os, sys   
-from SannetLogger import sannetlogger
-   
+import traceback, os, sys   
+from sannetlogger import SannetLogger
+
+
 if __name__== "__main__":
-    sanlogger = SannetLogger(print_to_console=True) # initialize logger
+    print(sys._current_frames()[0])
+    '''sanlogger = SannetLogger(directory=os.getcwd(), name="name", print_to_console=True) # initialize logger
     line = sys.stdin.readline()
     while line:
         sanlogger.log(line.strip("\n"))
-        line = sys.stdin.readline()
+        line = sys.stdin.readline()'''
