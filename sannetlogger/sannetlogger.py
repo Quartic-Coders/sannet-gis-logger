@@ -7,28 +7,33 @@
 #
 # ---------------------------------------------------------------------------
 
-import logging, os, inspect, glob, sys
+import logging, os, inspect, glob, sys, textwrap
 from logging import DEBUG, CRITICAL, INFO, ERROR, WARNING, NOTSET
 
 class SannetLogger(logging.getLoggerClass()):
     # global variable to define default logfile format
-    LOG_FORMAT = '%(asctime)-10s | %(name)-8s | '\
-                 '%(levelname)-8s | Method: %(mod_name)-8s | '\
-                 'Line No: %(line_no)-5s | Message: %(message)s'
+    LOG_FORMAT_A = '%(asctime)-10s | %(name)-8s | '\
+                   '%(levelname)-8s | Method: %(mod_name)-8s | '\
+                   'Line: %(line_no)-5s | Message: %(message)s'
 
+    LOG_FORMAT_B = '%(asctime)-10s | %(name)-8s | '\
+                   '%(levelname)-8s | Message: %(message)s'
+                   
     # global variable to define default datetime format
     DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
 
-    def __init__(self, directory = "", name = "", level=INFO, file_type=".log", print_to_console=False):
+    def __init__(self, directory = "", name = "", level=INFO, file_type=".log", print_to_console=False, verbose=True):
         """Private method to initialize logger and set formatting to conform to CoSD standards."""
         # Initial construct.
-        self.format = self.LOG_FORMAT
+        self.format = self.LOG_FORMAT_A if (verbose) else self.LOG_FORMAT_B
         self.level = level
         self.name = name
         self.parent = None
         self.propagate = 1
         self.handlers = []
         self.disabled = 0
+        self.verbose = verbose
+        self.max_len = 200
 
         # intialize public and private member variables
         self.__addformat = {'mod_name':'root', 'line_no' : '0', 'line_code' : ''} # verbose log formatting
@@ -79,27 +84,28 @@ class SannetLogger(logging.getLoggerClass()):
     def log(self, message, level=INFO):
         """Public method to execute writing a message to log file."""
         self.__setStackInfo() # update stack information from caller
-        self.logger.log(level, message) # write message to log
+        parts = textwrap.wrap(message, self.max_len)
+        for item in parts: self.logger.log(level, item)
 
     def info(self, message):
         """Public method to execute writing a message to log file."""
         self.__setStackInfo() # update stack information from caller
-        self.logger.info(message) # write message to log
+        self.log(message, INFO) # write message to log
         
     def warning(self, message):
         """Public method to execute writing a message to log file."""
         self.__setStackInfo() # update stack information from caller
-        self.logger.warning(message) # write message to log
+        self.log(message, WARNING) # write message to log
 
     def error(self, message):
         """Public method to execute writing a message to log file."""
         self.__setStackInfo() # update stack information from caller
-        self.logger.error(message) # write message to log
+        self.log(message, ERROR) # write message to log
 
     def critical(self, message):
         """Public method to execute writing a message to log file."""
         self.__setStackInfo() # update stack information from caller
-        self.logger.critical(message) # write message to log
+        self.log(message, CRITICAL) # write message to log
 
     def exception(self, message):
         """Public method to execute writing a message to log file."""
@@ -109,8 +115,8 @@ class SannetLogger(logging.getLoggerClass()):
 ## ------ TEST MAIN -----------------------------------------------------------------------
 
 if __name__== "__main__":
-    sanlogger = SannetLogger(print_to_console=True) # initialize logger
-    line = sys.stdin.readline()
-    while line:
-        sanlogger.log(line.strip("\n"))
-        line = sys.stdin.readline()
+    sanlogger = SannetLogger(print_to_console=True, verbose=True) # initialize logger
+    sanlogger.log("test")
+    sanlogger.warning("test warning")
+    sanlogger.error("test error")
+    sanlogger.error("test critical")
