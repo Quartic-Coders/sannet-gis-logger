@@ -45,22 +45,26 @@ class SannetLogger(logging.getLoggerClass()):
         self.logger = logging.getLogger(self.file_name)
         self.logger.setLevel(level) # sets level of urgency
         self.file_path = self.directory + '\\' + self.file_name + file_type # format complete file path
-        
-        # add the handlers to the logger
-        self.file_handler = logging.FileHandler(self.file_path) # create a file handler
-        self.__formatter = logging.Formatter(self.format, self.DATETIME_FORMAT) # init formatter
-        self.file_handler.setFormatter(self.__formatter) # set formatter for log file
-        self.logger.addHandler(self.file_handler) # add final handle object
 
-        # set enhanced formatting requirements
-        self.logger = logging.LoggerAdapter(self.logger, self.__addformat)
+        # adds file handler
+        self.__addFileHandler()
 
         # add handler to print to stdout
         if (print_to_console):
             self.__addStreamHandler()
 
+        # set enhanced formatting requirements
+        self.logger = logging.LoggerAdapter(self.logger, self.__addformat)
+
+    def __addFileHandler(self):
+        """private function to add file handler to the logger"""
+        self.file_handler = logging.FileHandler(self.file_path) # create a file handler
+        self.__formatter = logging.Formatter(self.format, self.DATETIME_FORMAT) # init formatter
+        self.file_handler.setFormatter(self.__formatter) # set formatter for log file
+        self.logger.addHandler(self.file_handler) # add final handle object
+
     def __addStreamHandler(self):
-        """Private method to add stream handler for passing messages to stdout."""
+        """Private function to add stream handler for passing messages to stdout."""
         ch = logging.StreamHandler(sys.stdout)
         ch.setLevel(logging.DEBUG)
         formatter = logging.Formatter(self.format, self.DATETIME_FORMAT) # init formatter
@@ -68,13 +72,13 @@ class SannetLogger(logging.getLoggerClass()):
         self.root.addHandler(ch)
 
     def __getCallingName(self):
-        """Private method to return the calling name of parent process in stack queue."""
+        """Private function to return the calling name of parent process in stack queue."""
         stack_frame = inspect.stack()[2] # get stack trace info
         module = inspect.getmodule(stack_frame[0]) # grab submodule from stack trace
         return module.__file__.split(".py")[0] # return file_name of caller submodule
 
     def __setStackInfo(self):
-        """Private method to update output based on calling info from execution stack."""
+        """Private function to update output based on calling info from execution stack."""
         stack_frame = inspect.stack()[2] # get stack trace info
         module = inspect.getouterframes(stack_frame[0])[0][3] # grabs most recent module from stack outer frame
         line_no = inspect.getouterframes(stack_frame[0])[0][2] # gets line number trace fron stack outer frame
@@ -82,33 +86,38 @@ class SannetLogger(logging.getLoggerClass()):
         self.__addformat['line_no'] = line_no # set line number
 
     def log(self, message, level=INFO):
-        """Public method to execute writing a message to log file."""
+        """Public function to execute writing a message to log file."""
         self.__setStackInfo() # update stack information from caller
         parts = textwrap.wrap(message, self.max_len)
         for item in parts: self.logger.log(level, item)
 
     def info(self, message):
-        """Public method to execute writing a message to log file."""
+        """Public function to execute writing a message to log file."""
         self.__setStackInfo() # update stack information from caller
         self.log(message, INFO) # write message to log
         
     def warning(self, message):
-        """Public method to execute writing a message to log file."""
+        """Public function to execute writing a message to log file."""
         self.__setStackInfo() # update stack information from caller
         self.log(message, WARNING) # write message to log
 
+    def debug(self, message):
+        """Public function to execute writing a message to log file."""
+        self.__setStackInfo() # update stack information from caller
+        self.log(message, DEBUG) # write message to log
+
     def error(self, message):
-        """Public method to execute writing a message to log file."""
+        """Public function to execute writing a message to log file."""
         self.__setStackInfo() # update stack information from caller
         self.log(message, ERROR) # write message to log
 
     def critical(self, message):
-        """Public method to execute writing a message to log file."""
+        """Public function to execute writing a message to log file."""
         self.__setStackInfo() # update stack information from caller
         self.log(message, CRITICAL) # write message to log
 
     def exception(self, message):
-        """Public method to execute writing a message to log file."""
+        """Public function to execute writing a message to log file."""
         self.__setStackInfo() # update stack information from caller
         self.logger.exception(message) # write message to log
 
