@@ -70,7 +70,7 @@ sanlogger.critical("Log message as CRITICAL")
 sanlogger.exception("Log message as EXCEPTION")
 
  ```
-- Note: the "DefaultLevel" parameter will set a minimum threashold for what will be written to the log.
+- Note: the "level" parameter in the initializer will set a minimum threashold for what will be written to the log.
 
 SannetLogger has the following optional parameters for initialization:
 
