@@ -61,7 +61,8 @@ SannetLogger also extends the following additional logging options:
 
  ```python
 
-sanlogger = SannetLogger()
+sanlogger = SannetLogger() # initialize only once
+
 sanlogger.log("Log default message. Default priority is INFO")
 sanlogger.debug("Log message as DEBUG")
 sanlogger.warning("Log message as WARNING")
