@@ -9,6 +9,7 @@
 
 import logging, os, inspect, glob, sys, textwrap
 from logging import DEBUG, CRITICAL, INFO, ERROR, WARNING, NOTSET
+from six import iteritems
 
 class SannetLogger(logging.getLoggerClass()):
     # global variable to define default logfile format
@@ -22,7 +23,7 @@ class SannetLogger(logging.getLoggerClass()):
     # global variable to define default datetime format
     DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
 
-    def __init__(self, directory = "", name = "", level=INFO, file_type=".log", print_to_console=True, verbose=True):
+    def __init__(self, directory = "", name = "", level=INFO, file_type=".log", print_to_console=True, verbose=True, debug_mode=False):
         """Private method to initialize logger and set formatting to conform to CoSD standards."""
         # Initial construct.
         self.format = self.LOG_FORMAT_A if (verbose) else self.LOG_FORMAT_B
@@ -34,7 +35,6 @@ class SannetLogger(logging.getLoggerClass()):
         self.disabled = 0
         self.verbose = verbose
         self.max_len = 200
-        self.debugging = False
 
         # intialize public and private member variables
         self.__addformat = {'mod_name':'root', 'line_no' : '0', 'line_code' : ''} # verbose log formatting
@@ -56,6 +56,7 @@ class SannetLogger(logging.getLoggerClass()):
 
         # set enhanced formatting requirements
         self.logger = logging.LoggerAdapter(self.logger, self.__addformat)
+        self.debugging = debug_mode
 
     def __addFileHandler(self):
         """private function to add file handler to the logger"""
@@ -102,19 +103,13 @@ class SannetLogger(logging.getLoggerClass()):
         :type: bool
         """
         self.__debugging = value
+        logger = logging.getLogger(self.file_name)
         if self.__debugging:
-            # if debug status is True, turn on debug logging
-            for _, logger in iteritems(self.logger):
-                logger.setLevel(logging.DEBUG)
-            # turn on httplib debug
-            httplib.HTTPConnection.debuglevel = 1
+            logger.setLevel(DEBUG)
         else:
             # if debug status is False, turn off debug logging,
             # setting log level to default `logging.WARNING`
-            for _, logger in iteritems(self.logger):
-                logger.setLevel(logging.WARNING)
-            # turn off httplib debug
-            httplib.HTTPConnection.debuglevel = 0
+            logger.setLevel(WARNING)
 
     def __log(self, message, level=INFO):
         """Private function to execute writing a message to log file."""
@@ -166,6 +161,7 @@ class SannetLogger(logging.getLoggerClass()):
 if __name__== "__main__":
     sanlogger = SannetLogger(print_to_console=True, verbose=True) # initialize logger
     sanlogger.log("test")
+    sanlogger.debugging = True
     sanlogger.warning("test warning")
     sanlogger.debug("test debug")
     sanlogger.error("test error")
