@@ -34,7 +34,7 @@ class SannetLogger(logging.getLoggerClass()):
         self.disabled = 0
         self.verbose = verbose
         self.max_len = 200
-        self.debug = False
+        self.debugging = False
 
         # intialize public and private member variables
         self.__addformat = {'mod_name':'root', 'line_no' : '0', 'line_code' : ''} # verbose log formatting
