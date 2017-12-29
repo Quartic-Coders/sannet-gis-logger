@@ -63,7 +63,7 @@ class SannetLogger(logging.getLoggerClass()):
         self.file_handler = logging.FileHandler(self.file_path) # create a file handler
         self.__formatter = logging.Formatter(self.format, self.DATETIME_FORMAT) # init formatter
         self.file_handler.setFormatter(self.__formatter) # set formatter for log file
-        self.logger.addHandler(self.file_handler) # add final handle object
+        self.root.addHandler(self.file_handler) # add final handle object
 
     def __addStreamHandler(self):
         """Private function to add stream handler for passing messages to stdout."""
@@ -161,8 +161,10 @@ class SannetLogger(logging.getLoggerClass()):
 if __name__== "__main__":
     sanlogger = SannetLogger(print_to_console=True, verbose=True) # initialize logger
     sanlogger.log("test")
-    sanlogger.debugging = True
     sanlogger.warning("test warning")
-    sanlogger.debug("test debug")
+    sanlogger.debugging = True
+    sanlogger.debug("test debug on")
+    sanlogger.debugging = False
+    sanlogger.debug("test debug off")
     sanlogger.error("test error")
     sanlogger.error("test critical")
