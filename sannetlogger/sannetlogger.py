@@ -85,42 +85,51 @@ class SannetLogger(logging.getLoggerClass()):
         self.__addformat['mod_name'] = module if (module != '<module>') else "Main" # set name of calling method
         self.__addformat['line_no'] = line_no # set line number
 
+    def __log(self, message, level=INFO):
+        """Private function to execute writing a message to log file."""
+        parts = textwrap.wrap(message, self.max_len)
+        for item in parts: self.logger.log(level, item)
+
     def log(self, message, level=INFO):
         """Public function to execute writing a message to log file."""
         self.__setStackInfo() # update stack information from caller
-        parts = textwrap.wrap(message, self.max_len)
-        for item in parts: self.logger.log(level, item)
+        self.log(message, INFO) # write message to log
 
     def info(self, message):
         """Public function to execute writing a message to log file."""
         self.__setStackInfo() # update stack information from caller
-        self.log(message, INFO) # write message to log
+        self.__log(message, INFO) # write message to log
         
     def warning(self, message):
         """Public function to execute writing a message to log file."""
         self.__setStackInfo() # update stack information from caller
-        self.log(message, WARNING) # write message to log
+        self.__log(message, WARNING) # write message to log
 
     def debug(self, message):
         """Public function to execute writing a message to log file."""
         self.__setStackInfo() # update stack information from caller
-        self.log(message, DEBUG) # write message to log
+        self.__log(message, DEBUG) # write message to log
 
     def error(self, message):
         """Public function to execute writing a message to log file."""
         self.__setStackInfo() # update stack information from caller
-        self.log(message, ERROR) # write message to log
+        self.__log(message, ERROR) # write message to log
 
     def critical(self, message):
         """Public function to execute writing a message to log file."""
         self.__setStackInfo() # update stack information from caller
-        self.log(message, CRITICAL) # write message to log
+        self.__log(message, CRITICAL) # write message to log
 
     def exception(self, message):
         """Public function to execute writing a message to log file."""
-        self.__setStackInfo() # update stack information from caller
-        self.logger.exception(message) # write message to log
-
+        try:
+            self.__setStackInfo() # update stack information from caller
+            self.logger.exception(message) # write message to log
+        except AttributeError:
+            self.logger.exception(str(message)) # some exception objects (ArcPy type) are not expandable and throw Attribute Error; must cast to string
+        except StandardError as ex:    # good idea to be prepared to handle various fails
+            self.__log(ex, ERROR) # write message to log
+            
 ## ------ TEST MAIN -----------------------------------------------------------------------
 
 if __name__== "__main__":
