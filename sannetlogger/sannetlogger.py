@@ -34,6 +34,7 @@ class SannetLogger(logging.getLoggerClass()):
         self.disabled = 0
         self.verbose = verbose
         self.max_len = 200
+        self.debug = False
 
         # intialize public and private member variables
         self.__addformat = {'mod_name':'root', 'line_no' : '0', 'line_code' : ''} # verbose log formatting
@@ -84,6 +85,36 @@ class SannetLogger(logging.getLoggerClass()):
         line_no = inspect.getouterframes(stack_frame[0])[0][2] # gets line number trace fron stack outer frame
         self.__addformat['mod_name'] = module if (module != '<module>') else "Main" # set name of calling method
         self.__addformat['line_no'] = line_no # set line number
+    
+    @property
+    def debugging(self):
+        """
+        Gets the debug status.
+        """
+        return self.__debugging
+
+    @debugging.setter
+    def debugging(self, value):
+        """
+        Sets the debug status.
+
+        :param value: The debug status, True or False.
+        :type: bool
+        """
+        self.__debugging = value
+        if self.__debugging:
+            # if debug status is True, turn on debug logging
+            for _, logger in iteritems(self.logger):
+                logger.setLevel(logging.DEBUG)
+            # turn on httplib debug
+            httplib.HTTPConnection.debuglevel = 1
+        else:
+            # if debug status is False, turn off debug logging,
+            # setting log level to default `logging.WARNING`
+            for _, logger in iteritems(self.logger):
+                logger.setLevel(logging.WARNING)
+            # turn off httplib debug
+            httplib.HTTPConnection.debuglevel = 0
 
     def __log(self, message, level=INFO):
         """Private function to execute writing a message to log file."""
@@ -129,7 +160,7 @@ class SannetLogger(logging.getLoggerClass()):
             self.logger.exception(str(message)) # some exception objects (ArcPy type) are not expandable and throw Attribute Error; must cast to string
         except StandardError as ex:    # good idea to be prepared to handle various fails
             self.__log(ex, ERROR) # write message to log
-            
+
 ## ------ TEST MAIN -----------------------------------------------------------------------
 
 if __name__== "__main__":
