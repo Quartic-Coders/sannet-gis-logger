@@ -127,5 +127,6 @@ if __name__== "__main__":
     sanlogger = SannetLogger(print_to_console=True, verbose=True) # initialize logger
     sanlogger.log("test")
     sanlogger.warning("test warning")
+    sanlogger.debug("test debug")
     sanlogger.error("test error")
     sanlogger.error("test critical")

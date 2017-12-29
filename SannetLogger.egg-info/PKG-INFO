@@ -1,0 +1,11 @@
+Metadata-Version: 1.0
+Name: SannetLogger
+Version: 1.1.0
+Summary: Standardize logging module for City of San Diego batch Processing.
+Home-page: http://tfs/tfs/CoSDCollection/0023%20Enterprise%20GIS/_git/sannet-gis-logger
+Author: Andrew Tangeman
+Author-email: andrew@quarticsolutions.com
+License: BSD
+Description: UNKNOWN
+Keywords: cosd logger batch
+Platform: UNKNOWN
