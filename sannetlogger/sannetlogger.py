@@ -152,7 +152,7 @@ class SannetLogger(logging.getLoggerClass()):
             self.__setStackInfo() # update stack information from caller
             self.logger.exception(message) # write message to log
         except AttributeError:
-            self.logger.exception(str(message)) # some exception objects (ArcPy type) are not expandable and throw Attribute Error; must cast to string
+            self.error(str(message)) # some exception objects (ArcPy type) are not expandable and throw Attribute Error; must cast to string
         except StandardError as ex:    # good idea to be prepared to handle various fails
             self.__log(ex, ERROR) # write message to log
 
