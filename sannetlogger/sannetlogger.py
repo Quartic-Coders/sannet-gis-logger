@@ -154,7 +154,7 @@ class SannetLogger(logging.getLoggerClass()):
         except AttributeError:
             self.error(str(message)) # some exception objects (ArcPy type) are not expandable and throw Attribute Error; must cast to string
         except StandardError as ex:    # good idea to be prepared to handle various fails
-            self.__log(ex, ERROR) # write message to log
+            self.error(ex) # write message to log
 
 ## ------ TEST MAIN -----------------------------------------------------------------------
 
@@ -167,4 +167,10 @@ if __name__== "__main__":
     sanlogger.debugging = False
     sanlogger.debug("test debug off")
     sanlogger.error("test error")
-    sanlogger.error("test critical")
+
+    try:
+        valu = int(1/0)
+    except Exception as ex:
+        sanlogger.exception(ex)
+
+    sanlogger.critical("test critical")
