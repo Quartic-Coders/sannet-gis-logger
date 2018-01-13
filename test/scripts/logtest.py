@@ -2,29 +2,29 @@
 
 
 from sannetlogger import SannetLogger
-from LogTestClassB import LogTestClassB
 
-class LogTestClassA:
-    def __init__(self, log):
-        self.logit = log
+def log_info(msg):
+    log.log(msg)
+    print msg
 
-    def class_test(self, msg):
-        self.logit.log("test logger from inside method inside a class with message= " + msg)
 
+def log_debug(msg):
+    log.log("Error occurred:"+msg)
+    print msg
+    global send_debug_email
+    send_debug_email = True
+    
 #test comment directly above TestLogger method
 def TestLogger(msg):
-    logutil.log(msg)
+    log.log(msg)
 
-logutil = SannetLogger("..\\Logs")
+log = SannetLogger("..\\Logs")
 
-logutil.log("test in root of script")
+log.log("test in root of script")
 
 #test comment directly above function call
-logutil.log("test with comment above root function call")
-TestLogger("test logger from inside root method")
+log.log("test with comment above root function call0")
+TestLogger("test logger from inside root method0")
+log_debug("test logger from inside root method0")
+log_info("test logger from inside root method0")
 
-logTestA = LogTestClassA(logutil)
-logTestA.class_test("test method from inside internal class")
-
-logTestB = LogTestClassB(logutil)
-logTestB.class_test("test method with logger passed to external class")
