@@ -4,7 +4,7 @@ Class to standardize logging procedure for City of San Diego batch Processing.
 
 ## Getting Started
 
-sannetlogger.py is a self-contained and portable, script but it can also be installed globally on your local machine for development using setup.py -install from cmd.
+sannetlogger.py is a self-contained and portable tool but it can also be installed globally on your local machine for development using setup.py -install from cmd.
 
 ### Prerequisites
 
@@ -42,7 +42,7 @@ Setup.py install
 
 Project will now be available on the local system for all python projects.
 
-### How to USe
+### How to Use
 
 To use this script, simply include the following at the top of your imports:
 
@@ -56,8 +56,31 @@ To log, assign the ``` SannetLogger() ``` object to a variable, and use the .log
 sanlogger = SannetLogger()
 sanlogger.log("test message")
  ```
- 
-When initializing the logger you can define the following optional parameters to output the log:
+
+SannetLogger also extends the following additional logging options:
+
+ ```python
+
+sanlogger.log("Log default message. Default priority is INFO")
+sanlogger.debug("Log message as DEBUG")
+sanlogger.warning("Log message as WARNING")
+sanlogger.error("Log message as ERROR")
+sanlogger.critical("Log message as CRITICAL")
+sanlogger.exception("Log message as EXCEPTION")
+
+ ```
+- Note: the "level" parameter in the initializer will set a minimum threashold for what will be written to the log.
+
+SannetLogger has the following optional parameters for initialization:
+
+```python
+
+def __init__(self, directory = "", name = "", level=INFO, file_type=".log", print_to_console=False, verbose=True):
+    ...
+    
+```
+
+When initializing the logger you can define the following optional parameters to specify the output filename:
 
 ```python
 sanlogger = SannetLogger('<Directory Name>', '<File_Name>') # optional parameters

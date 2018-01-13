@@ -9,6 +9,7 @@
 
 import logging, os, inspect, glob, sys, textwrap
 from logging import DEBUG, CRITICAL, INFO, ERROR, WARNING, NOTSET
+from six import iteritems
 
 class SannetLogger(logging.getLoggerClass()):
     # global variable to define default logfile format
@@ -22,7 +23,7 @@ class SannetLogger(logging.getLoggerClass()):
     # global variable to define default datetime format
     DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
 
-    def __init__(self, directory = "", name = "", level=DEBUG, file_type=".log", print_to_console=False, verbose=True):
+    def __init__(self, directory = "", name = "", level=INFO, file_type=".log", print_to_console=True, verbose=True, debug_mode=False):
         """Private method to initialize logger and set formatting to conform to CoSD standards."""
         # Initial construct.
         self.format = self.LOG_FORMAT_A if (verbose) else self.LOG_FORMAT_B
@@ -55,13 +56,14 @@ class SannetLogger(logging.getLoggerClass()):
 
         # set enhanced formatting requirements
         self.logger = logging.LoggerAdapter(self.logger, self.__addformat)
+        self.debugging = debug_mode
 
     def __addFileHandler(self):
         """private function to add file handler to the logger"""
         self.file_handler = logging.FileHandler(self.file_path) # create a file handler
         self.__formatter = logging.Formatter(self.format, self.DATETIME_FORMAT) # init formatter
         self.file_handler.setFormatter(self.__formatter) # set formatter for log file
-        self.logger.addHandler(self.file_handler) # add final handle object
+        self.root.addHandler(self.file_handler) # add final handle object
 
     def __addStreamHandler(self):
         """Private function to add stream handler for passing messages to stdout."""
@@ -84,42 +86,75 @@ class SannetLogger(logging.getLoggerClass()):
         line_no = inspect.getouterframes(stack_frame[0])[0][2] # gets line number trace fron stack outer frame
         self.__addformat['mod_name'] = module if (module != '<module>') else "Main" # set name of calling method
         self.__addformat['line_no'] = line_no # set line number
+    
+    @property
+    def debugging(self):
+        """
+        Gets the debug status.
+        """
+        return self.__debugging
+
+    @debugging.setter
+    def debugging(self, value):
+        """
+        Sets the debug status.
+
+        :param value: The debug status, True or False.
+        :type: bool
+        """
+        self.__debugging = value
+        logger = logging.getLogger(self.file_name)
+        if self.__debugging:
+            logger.setLevel(DEBUG)
+        else:
+            # if debug status is False, turn off debug logging,
+            # setting log level to default `logging.WARNING`
+            logger.setLevel(WARNING)
+
+    def __log(self, message, level=INFO):
+        """Private function to execute writing a message to log file."""
+        parts = textwrap.wrap(message, self.max_len)
+        for item in parts: self.logger.log(level, item)
 
     def log(self, message, level=INFO):
         """Public function to execute writing a message to log file."""
         self.__setStackInfo() # update stack information from caller
-        parts = textwrap.wrap(message, self.max_len)
-        for item in parts: self.logger.log(level, item)
+        self.__log(message, INFO) # write message to log
 
     def info(self, message):
         """Public function to execute writing a message to log file."""
         self.__setStackInfo() # update stack information from caller
-        self.log(message, INFO) # write message to log
+        self.__log(message, INFO) # write message to log
         
     def warning(self, message):
         """Public function to execute writing a message to log file."""
         self.__setStackInfo() # update stack information from caller
-        self.log(message, WARNING) # write message to log
+        self.__log(message, WARNING) # write message to log
 
     def debug(self, message):
         """Public function to execute writing a message to log file."""
         self.__setStackInfo() # update stack information from caller
-        self.log(message, DEBUG) # write message to log
+        self.__log(message, DEBUG) # write message to log
 
     def error(self, message):
         """Public function to execute writing a message to log file."""
         self.__setStackInfo() # update stack information from caller
-        self.log(message, ERROR) # write message to log
+        self.__log(message, ERROR) # write message to log
 
     def critical(self, message):
         """Public function to execute writing a message to log file."""
         self.__setStackInfo() # update stack information from caller
-        self.log(message, CRITICAL) # write message to log
+        self.__log(message, CRITICAL) # write message to log
 
     def exception(self, message):
         """Public function to execute writing a message to log file."""
-        self.__setStackInfo() # update stack information from caller
-        self.logger.exception(message) # write message to log
+        try:
+            self.__setStackInfo() # update stack information from caller
+            self.logger.exception(message) # write message to log
+        except AttributeError:
+            self.logger.exception(str(message)) # some exception objects (ArcPy type) are not expandable and throw Attribute Error; must cast to string
+        except StandardError as ex:    # good idea to be prepared to handle various fails
+            self.__log(ex, ERROR) # write message to log
 
 ## ------ TEST MAIN -----------------------------------------------------------------------
 
@@ -127,5 +162,9 @@ if __name__== "__main__":
     sanlogger = SannetLogger(print_to_console=True, verbose=True) # initialize logger
     sanlogger.log("test")
     sanlogger.warning("test warning")
+    sanlogger.debugging = True
+    sanlogger.debug("test debug on")
+    sanlogger.debugging = False
+    sanlogger.debug("test debug off")
     sanlogger.error("test error")
     sanlogger.error("test critical")
