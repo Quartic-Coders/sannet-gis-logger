@@ -1,6 +1,6 @@
 @echo off
 
-cd D:\BATCH_FILES\UTILITIES\SannetLogger\
-python setup.py install
+chdir /D D:\BATCH_FILES\UTILITIES\SannetLogger\
+python D:\BATCH_FILES\UTILITIES\SannetLogger\Setup.py install
 
 pause 
