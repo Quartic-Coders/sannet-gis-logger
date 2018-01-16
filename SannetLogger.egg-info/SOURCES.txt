@@ -1,8 +1,0 @@
-Setup.py
-SannetLogger.egg-info/PKG-INFO
-SannetLogger.egg-info/SOURCES.txt
-SannetLogger.egg-info/dependency_links.txt
-SannetLogger.egg-info/top_level.txt
-sannetlogger/__init__.py
-sannetlogger/batlogger.py
-sannetlogger/sannetlogger.py
