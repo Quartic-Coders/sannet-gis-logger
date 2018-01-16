@@ -9,7 +9,6 @@
 
 import logging, os, inspect, glob, sys, textwrap
 from logging import DEBUG, CRITICAL, INFO, ERROR, WARNING, NOTSET
-from six import iteritems
 
 class SannetLogger(logging.getLoggerClass()):
     # global variable to define default logfile format
