@@ -22,7 +22,7 @@ class SannetLogger(logging.getLoggerClass()):
     # global variable to define default datetime format
     DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
 
-    def __init__(self, directory = "", name = "", level=INFO, file_type=".log", print_to_console=True, verbose=True, debug_mode=False):
+    def __init__(self, directory = "", name = "", level=NOTSET, file_type=".log", print_to_console=True, verbose=True, debug_mode=False):
         """Private method to initialize logger and set formatting to conform to CoSD standards."""
         # Initial construct.
         self.format = self.LOG_FORMAT_A if (verbose) else self.LOG_FORMAT_B
