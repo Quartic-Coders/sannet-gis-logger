@@ -3,7 +3,7 @@
 # Author:    Andrew Tangeman
 # Created:   2017-09-07
 # Purpose:   Wapper class to standardize logging procedure for City of San Diego batch
-#            Processing. Extends from python logging library. 
+#            Processing. Extends from python logging library.
 #
 # ---------------------------------------------------------------------------
 
@@ -18,11 +18,11 @@ class SannetLogger(logging.getLoggerClass()):
 
     LOG_FORMAT_B = '%(asctime)-10s | %(name)-8s | '\
                    '%(levelname)-8s | Message: %(message)s'
-                   
+
     # global variable to define default datetime format
     DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
 
-    def __init__(self, directory = "", name = "", level=NOTSET, file_type=".log", print_to_console=True, verbose=True, debug_mode=False):
+    def __init__(self, directory = "", name = "", level=INFO, file_type=".log", print_to_console=True, verbose=True, debug_mode=False):
         """Private method to initialize logger and set formatting to conform to CoSD standards."""
         # Initial construct.
         self.format = self.LOG_FORMAT_A if (verbose) else self.LOG_FORMAT_B
@@ -34,7 +34,7 @@ class SannetLogger(logging.getLoggerClass()):
         self.disabled = 0
         self.verbose = verbose
         self.max_len = 200
-
+        self.__debugging = False
         # intialize public and private member variables
         self.__addformat = {'mod_name':'root', 'line_no' : '0', 'line_code' : ''} # verbose log formatting
         self.file_name = os.path.basename(self.__getCallingName()) if (name == "") else name # assign file name to name of caller if bank
@@ -55,7 +55,8 @@ class SannetLogger(logging.getLoggerClass()):
 
         # set enhanced formatting requirements
         self.logger = logging.LoggerAdapter(self.logger, self.__addformat)
-        self.debugging = debug_mode
+
+        #self.debugging = debug_mode
 
     def __addFileHandler(self):
         """private function to add file handler to the logger"""
@@ -67,7 +68,7 @@ class SannetLogger(logging.getLoggerClass()):
     def __addStreamHandler(self):
         """Private function to add stream handler for passing messages to stdout."""
         ch = logging.StreamHandler(sys.stdout)
-        ch.setLevel(logging.DEBUG)
+        ch.setLevel(self.level)
         formatter = logging.Formatter(self.format, self.DATETIME_FORMAT) # init formatter
         ch.setFormatter(formatter)
         self.root.addHandler(ch)
@@ -85,7 +86,7 @@ class SannetLogger(logging.getLoggerClass()):
         line_no = inspect.getouterframes(stack_frame[0])[0][2] # gets line number trace fron stack outer frame
         self.__addformat['mod_name'] = module if (module != '<module>') else "Main" # set name of calling method
         self.__addformat['line_no'] = line_no # set line number
-    
+
     @property
     def debugging(self):
         """
@@ -108,12 +109,13 @@ class SannetLogger(logging.getLoggerClass()):
         else:
             # if debug status is False, turn off debug logging,
             # setting log level to default `logging.WARNING`
-            logger.setLevel(WARNING)
+            logger.setLevel(INFO)
 
     def __log(self, message, level=INFO):
         """Private function to execute writing a message to log file."""
         parts = textwrap.wrap(message, self.max_len)
-        for item in parts: self.logger.log(level, item)
+        for item in parts:
+            self.logger.log(level, item)
 
     def log(self, message, level=INFO):
         """Public function to execute writing a message to log file."""
@@ -124,7 +126,7 @@ class SannetLogger(logging.getLoggerClass()):
         """Public function to execute writing a message to log file."""
         self.__setStackInfo() # update stack information from caller
         self.__log(message, INFO) # write message to log
-        
+
     def warning(self, message):
         """Public function to execute writing a message to log file."""
         self.__setStackInfo() # update stack information from caller
@@ -158,12 +160,12 @@ class SannetLogger(logging.getLoggerClass()):
 ## ------ TEST MAIN -----------------------------------------------------------------------
 
 if __name__== "__main__":
-    sanlogger = SannetLogger(print_to_console=True, verbose=True) # initialize logger
+    sanlogger = SannetLogger(level=INFO) # initialize logger
     sanlogger.log("test")
     sanlogger.warning("test warning")
-    sanlogger.debugging = True
+    #sanlogger.debugging = True
     sanlogger.debug("test debug on")
-    sanlogger.debugging = False
+    #sanlogger.debugging = False
     sanlogger.debug("test debug off")
     sanlogger.error("test error")
 
