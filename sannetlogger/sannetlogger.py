@@ -39,9 +39,10 @@ class SannetLogger(logging.getLoggerClass()):
         self.__addformat = {'mod_name':'root', 'line_no' : '0', 'line_code' : ''} # verbose log formatting
         self.file_name = os.path.basename(self.__getCallingName()) if (name == "") else name # assign file name to name of caller if bank
         self.directory = os.path.dirname(self.__getCallingName()) if (directory == "") else directory # assign dir to dir of caller if blank
-
+        
         # intialize logger
         self.file_name = self.file_name if ("." in self.file_name == False) else self.file_name.split('.')[0]
+        logging.lastResort = False
         self.logger = logging.getLogger(self.file_name)
         self.logger.setLevel(level) # sets level of urgency
         self.file_path = self.directory + '\\' + self.file_name + file_type # format complete file path
@@ -163,9 +164,9 @@ if __name__== "__main__":
     sanlogger = SannetLogger(level=INFO) # initialize logger
     sanlogger.log("test")
     sanlogger.warning("test warning")
-    #sanlogger.debugging = True
+    sanlogger.debugging = True
     sanlogger.debug("test debug on")
-    #sanlogger.debugging = False
+    sanlogger.debugging = False
     sanlogger.debug("test debug off")
     sanlogger.error("test error")
 
