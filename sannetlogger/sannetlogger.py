@@ -35,20 +35,22 @@ class SannetLogger(logging.getLoggerClass()):
         self.verbose = verbose
         self.max_len = 200
         self.__debugging = False
+        self.file_type = file_type
+
         # intialize public and private member variables
         self.__addformat = {'mod_name':'root', 'line_no' : '0', 'line_code' : ''} # verbose log formatting
-        self.file_name = os.path.basename(self.__getCallingName()) if (name == "") else name # assign file name to name of caller if bank
+        self.__file_name = os.path.basename(self.__getCallingName()) if (name == "") else name # assign file name to name of caller if bank
         self.directory = os.path.dirname(self.__getCallingName()) if (directory == "") else directory # assign dir to dir of caller if blank
         
         # intialize logger
-        self.file_name = self.file_name if ("." in self.file_name == False) else self.file_name.split('.')[0]
+        self.__file_name = self.__file_name if ("." in self.__file_name == False) else self.__file_name.split('.')[0]
         logging.lastResort = False
-        self.logger = logging.getLogger(self.file_name)
+        self.logger = logging.getLogger(self.__file_name)
         self.logger.setLevel(level) # sets level of urgency
-        self.file_path = self.directory + '\\' + self.file_name + file_type # format complete file path
+        self.file_path = os.path.join(self.directory, "{0}{1}".format(self.__file_name, self.file_type)) # format complete file path
 
         # adds file handler
-        self.__addFileHandler()
+        self.__addFileHandler(self.file_path)
 
         # add handler to print to stdout
         if (print_to_console):
@@ -59,9 +61,9 @@ class SannetLogger(logging.getLoggerClass()):
 
         #self.debugging = debug_mode
 
-    def __addFileHandler(self):
+    def __addFileHandler(self, file_path):
         """private function to add file handler to the logger"""
-        self.file_handler = logging.FileHandler(self.file_path) # create a file handler
+        self.file_handler = logging.FileHandler(file_path) # create a file handler
         self.__formatter = logging.Formatter(self.format, self.DATETIME_FORMAT) # init formatter
         self.file_handler.setFormatter(self.__formatter) # set formatter for log file
         self.root.addHandler(self.file_handler) # add final handle object
@@ -89,6 +91,30 @@ class SannetLogger(logging.getLoggerClass()):
         self.__addformat['line_no'] = line_no # set line number
 
     @property
+    def file_name(self):
+        """
+        Gets the debug status.
+        """
+        return self.__file_name
+
+    @file_name.setter
+    def file_name(self, value):
+        """
+        Sets the debug status.
+
+        :param value: The debug status, True or False.
+        :type: bool
+        """
+        if (value == "" or value == None):
+            return
+         # format complete file path
+        file_path = os.path.join(self.directory, "{0}{1}".format(value, self.file_type))
+        logger = logging.FileHandler(self.file_path)
+        logger.close()
+        self.file_path = file_path
+        self.__addFileHandler(file_path)
+
+    @property
     def debugging(self):
         """
         Gets the debug status.
@@ -114,7 +140,7 @@ class SannetLogger(logging.getLoggerClass()):
 
     def __log(self, message, level=INFO):
         """Private function to execute writing a message to log file."""
-        parts = textwrap.wrap(message, self.max_len)
+        parts = textwrap.wrap(str(message), self.max_len)
         for item in parts:
             self.logger.log(level, item)
 
